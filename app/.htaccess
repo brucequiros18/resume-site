@@ -1,0 +1,2 @@
+# Keep the application directory private even if the web root is misconfigured.
+Require all denied
