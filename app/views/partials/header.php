@@ -19,7 +19,6 @@
             <li><a href="/uses"<?= active_path($req, '/uses') ?>>Uses</a></li>
             <li><a href="/about"<?= active_path($req, '/about') ?>>About</a></li>
             <li><a href="/contact"<?= active_path($req, '/contact') ?>>Contact</a></li>
-            <li><a class="nav-cta" href="/resume.pdf">Resume</a></li>
         </ul>
 
         <button class="theme-toggle" type="button" aria-pressed="false"
