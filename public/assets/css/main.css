@@ -1589,3 +1589,347 @@ body { line-height: 1.72; }
     animation: none;
   }
 }
+
+/* ============================================================
+   SPATIAL UI — depth planes, liquid glass, elevation, 3D tilt
+   Planes: far (aurora glows + floating shapes), mid (glass
+   cards), near (interactive lift). Consumes the pointer vars
+   the JS agent writes:
+     .project            — --mx/--my (px, spotlight) + --rx/--ry/--lift
+     .focus-item         — --rx/--ry
+     .img-slot--portrait — --rx/--ry
+     .bg                 — --parallax-x/--parallax-y/--scroll-y
+   Falls back to 0 when the vars are absent (no JS / reduced
+   motion / coarse pointer): no tilt, only shadow + glass.
+   ============================================================ */
+
+/* ---------- spatial tokens ---------- */
+
+:root {
+  /* liquid glass material */
+  --glass:      rgba(16, 22, 15, 0.55);
+  --glass-high: rgba(255, 255, 255, 0.06);
+
+  /* elevation — rest / hover / active */
+  --elev-1: 0 1px 2px rgba(0, 0, 0, 0.35), 0 10px 24px -16px rgba(0, 0, 0, 0.55);
+  --elev-2: 0 2px 6px rgba(0, 0, 0, 0.40), 0 24px 48px -20px rgba(0, 0, 0, 0.70);
+  --elev-3: 0 1px 3px rgba(0, 0, 0, 0.50), 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- mid plane: liquid glass material ---------- */
+
+/* Opaque fallback for engines without backdrop-filter. */
+.term,
+.form-card,
+.focus-grid .focus-item,
+.project,
+.job,
+.principle,
+.img-slot:has(img) {
+  background: var(--surface);
+}
+
+@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .term,
+  .form-card,
+  .focus-grid .focus-item,
+  .project,
+  .job,
+  .principle,
+  .img-slot:has(img) {
+    background: var(--glass);
+    -webkit-backdrop-filter: blur(14px) saturate(1.2);
+            backdrop-filter: blur(14px) saturate(1.2);
+  }
+}
+
+/* Full cards — rounded, bordered all around. */
+.term,
+.form-card,
+.focus-grid .focus-item,
+.principle,
+.principle:last-child,
+.img-slot:has(img) {
+  border: 1px solid var(--border-2);
+  border-radius: var(--r-md);
+  box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-1);
+}
+
+/* Glass rows — timeline rows keep their separators, recolored. */
+.project,
+.job {
+  border-bottom: 1px solid var(--border-2);
+  box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-1);
+}
+.project:first-of-type { border-top-color: var(--border-2); }
+
+/* ---------- focus strip: strip becomes a card grid ---------- */
+
+.focus-grid { border-top: none; gap: 14px; }
+.focus-grid .focus-item { padding: 22px 20px; }
+
+/* ---------- principles: rows become index cards ---------- */
+
+.principle { padding: 26px 24px; }
+.principle + .principle { margin-top: 14px; }
+
+/* ---------- near plane: elevation lift on interactive glass ---------- */
+
+.term,
+.form-card,
+.btn--ghost,
+.chip,
+.social-link,
+.nav-links .nav-cta {
+  transition:
+    transform var(--t-fast),
+    box-shadow var(--t-fast),
+    border-color var(--t-fast),
+    background-color var(--t-fast),
+    color var(--t-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .term:hover,
+  .form-card:hover {
+    transform: translateY(-4px);
+    box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-2);
+  }
+
+  .btn--ghost:hover,
+  .chip:hover,
+  .social-link:hover,
+  .nav-links .nav-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elev-2);
+  }
+
+  .btn--ghost:active,
+  .chip:active,
+  .social-link:active,
+  .nav-links .nav-cta:active {
+    transform: translateY(1px);
+    box-shadow: var(--elev-3);
+  }
+}
+
+/* ---------- 3D tilt: mid-plane cards face the cursor ---------- */
+
+.project,
+.focus-grid .focus-item,
+.img-slot--portrait {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    box-shadow var(--t-slow),
+    border-color var(--t-fast),
+    padding-left var(--t-fast);
+}
+
+/* Inner content floats forward out of the glass. */
+.project > *,
+.focus-grid .focus-item > * {
+  transform: translateZ(24px);
+}
+.img-slot--portrait img { transform: translateZ(16px); }
+
+@media (hover: hover) and (pointer: fine) {
+  .project:hover,
+  .focus-grid .focus-item:hover,
+  .img-slot--portrait:hover {
+    transform: translateY(-4px) perspective(900px)
+      rotateX(var(--rx, 0deg))
+      rotateY(var(--ry, 0deg))
+      scale(var(--lift, 1));
+    box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-2);
+  }
+
+  .project:active,
+  .focus-grid .focus-item:active {
+    transform: translateY(0) perspective(900px)
+      rotateX(var(--rx, 0deg))
+      rotateY(var(--ry, 0deg))
+      scale(var(--lift, 1));
+    box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-3);
+  }
+}
+
+/* ---------- far plane: background parallax + floor drift ---------- */
+
+.bg {
+  transform: translate3d(var(--parallax-x, 0px), var(--parallax-y, 0px), 0);
+}
+
+.bg-floor {
+  transform: perspective(620px) rotateX(63deg) translateY(var(--scroll-y, 0px));
+}
+
+/* ---------- floating shapes (decorative; aria-hidden in HTML) ---------- */
+
+.bg-shapes {
+  position: absolute;
+  inset: 0;
+  z-index: 1; /* above bg glow, below main content */
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-shape {
+  position: absolute;
+  will-change: transform;
+}
+
+.bg-shape--far {
+  top: 12%;
+  left: 7%;
+  width: 360px;
+  height: 220px;
+  border-radius: 48% 52% 46% 54%;
+  background: linear-gradient(135deg, var(--accent-a06), transparent 70%);
+  filter: blur(60px);
+  opacity: 0.35;
+  animation: shape-float-a 34s ease-in-out infinite;
+}
+
+.bg-shape--far-b {
+  bottom: 8%;
+  right: 5%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-a06), transparent 70%);
+  filter: blur(60px);
+  opacity: 0.22;
+  animation: shape-float-b 44s ease-in-out infinite;
+}
+
+.bg-shape--mid {
+  top: 36%;
+  left: 2%;
+  width: 180px;
+  height: 180px;
+  border-radius: 26px;
+  border: 1px solid var(--accent-a08);
+  filter: blur(24px);
+  opacity: 0.4;
+  animation: shape-float-c 26s ease-in-out infinite;
+}
+
+.bg-shape--near {
+  top: 52%;
+  right: 13%;
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  border: 1px solid var(--border-2);
+  opacity: 0.5;
+  animation: shape-float-d 18s ease-in-out infinite;
+}
+
+@keyframes shape-float-a {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-8deg); }
+  50%      { transform: translate3d(26px, -34px, 0) rotate(4deg); }
+}
+@keyframes shape-float-b {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(10deg); }
+  50%      { transform: translate3d(-30px, -22px, 0) rotate(-6deg); }
+}
+@keyframes shape-float-c {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-12deg); }
+  50%      { transform: translate3d(18px, 32px, 0) rotate(-4deg); }
+}
+@keyframes shape-float-d {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(6deg); }
+  50%      { transform: translate3d(-20px, 28px, 0) rotate(10deg); }
+}
+@keyframes shape-float-sm {
+  0%, 100% { transform: translate3d(0, 0, 0) rotate(-2deg); }
+  50%      { transform: translate3d(8px, -12px, 0) rotate(2deg); }
+}
+
+/* ---------- icon depth: shine + lift ---------- */
+
+.social-ico {
+  border-radius: 8px;
+  padding: 5px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 55%),
+    var(--accent-a05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: background-color var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+}
+.social-link:hover .social-ico {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.10), transparent 55%),
+    var(--accent-a08);
+  transform: translateY(-2px);
+  box-shadow: var(--elev-1), inset 0 1px 0 rgba(255, 255, 255, 0.10);
+}
+
+.chip:not(.chip--accent) {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.04), transparent 60%);
+}
+
+.tag {
+  display: inline-block;
+  padding: 1px 8px;
+  margin-left: 2px;
+  border: 1px solid var(--border-2);
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--accent);
+  background: linear-gradient(135deg, var(--accent-a05), transparent 65%);
+  transition: transform var(--t-fast), box-shadow var(--t-fast);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .tag:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--elev-1);
+  }
+}
+
+/* ---------- mobile: calm the float, drop the tilt ---------- */
+
+@media (max-width: 760px) {
+  .bg-shape--far,
+  .bg-shape--far-b,
+  .bg-shape--mid,
+  .bg-shape--near {
+    animation-name: shape-float-sm;
+  }
+
+  .project:hover,
+  .focus-grid .focus-item:hover,
+  .img-slot--portrait:hover {
+    transform: translateY(-2px);
+    box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-2);
+  }
+}
+
+/* ---------- reduced motion: freeze the depth layer ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bg-shape,
+  .bg-shape--far,
+  .bg-shape--far-b,
+  .bg-shape--mid,
+  .bg-shape--near {
+    animation: none;
+  }
+
+  .project:hover,
+  .focus-grid .focus-item:hover,
+  .img-slot--portrait:hover,
+  .term:hover,
+  .form-card:hover,
+  .btn--ghost:hover,
+  .chip:hover,
+  .social-link:hover,
+  .nav-links .nav-cta:hover,
+  .tag:hover {
+    transform: none;
+    box-shadow: inset 0 1px 0 var(--glass-high), var(--elev-1);
+  }
+}

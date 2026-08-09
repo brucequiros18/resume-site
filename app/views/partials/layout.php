@@ -40,6 +40,12 @@ $pageDesc = $data['tagline'];
         <div class="bg-data bg-data--one"></div>
         <div class="bg-data bg-data--two"></div>
         <div class="bg-floor"></div>
+        <div class="bg-shapes" aria-hidden="true">
+            <div class="bg-shape bg-shape--far"></div>
+            <div class="bg-shape bg-shape--far-b"></div>
+            <div class="bg-shape bg-shape--mid"></div>
+            <div class="bg-shape bg-shape--near"></div>
+        </div>
     </div>
 
     <a class="skip-link" href="#main">Skip to content</a>

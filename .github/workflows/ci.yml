@@ -1,0 +1,25 @@
+name: php-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          extensions: mbstring, pdo_mysql
+
+      - name: Syntax check every PHP file
+        run: |
+          find . -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Verify route model loads
+        run: php -r "require 'app/lib/helpers.php'; var_export(require 'app/routes.php');"

@@ -17,12 +17,23 @@ final class Database
 
         $config = require __DIR__ . '/../config/database.php';
 
-        $dsn = sprintf(
-            'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
-            $config['host'],
-            $config['port'],
-            $config['name']
-        );
+        $driver = $config['driver'] ?? 'mysql';
+
+        if ($driver === 'pgsql') {
+            $dsn = sprintf(
+                'pgsql:host=%s;port=%s;dbname=%s',
+                $config['host'],
+                $config['port'],
+                $config['name']
+            );
+        } else {
+            $dsn = sprintf(
+                'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
+                $config['host'],
+                $config['port'],
+                $config['name']
+            );
+        }
 
         self::$pdo = new PDO(
             $dsn,
