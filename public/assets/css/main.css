@@ -285,7 +285,7 @@ h3 { font-size: 1.15rem; letter-spacing: -0.02em; }
   font-size: 14px;
   color: var(--text-2);
   transition: color var(--t-fast);
-  padding-block: 6px;
+  padding-block: 10px;
 }
 .nav-links a:hover { color: var(--text); }
 .nav-links a[aria-current="page"] { color: var(--text); font-weight: 500; }
@@ -669,6 +669,7 @@ h3 { font-size: 1.15rem; letter-spacing: -0.02em; }
   transition: padding-left var(--t-fast);
 }
 .project:first-of-type { border-top: 1px solid var(--border); }
+.project { cursor: pointer; }
 .project:hover { padding-left: 10px; }
 .project h3 { font-size: 1.1rem; margin-bottom: 6px; }
 .project p { margin: 0; color: var(--text-2); font-size: 14.5px; max-width: 62ch; }
@@ -1080,16 +1081,19 @@ h3 { font-size: 1.15rem; letter-spacing: -0.02em; }
   white-space: nowrap;
   animation: status-cycle 16s infinite;
 }
-.status-line:nth-child(1) { animation-delay: 0s; }
-.status-line:nth-child(2) { animation-delay: 3.2s; }
-.status-line:nth-child(3) { animation-delay: 6.4s; }
-.status-line:nth-child(4) { animation-delay: 9.6s; }
-.status-line:nth-child(5) { animation-delay: 12.8s; }
+/* Negative delay on line 1 → a status is visible from the moment the page loads. */
+.status-line:nth-child(1) { animation-delay: -3.2s; }
+.status-line:nth-child(2) { animation-delay: 0s; }
+.status-line:nth-child(3) { animation-delay: 3.2s; }
+.status-line:nth-child(4) { animation-delay: 6.4s; }
+.status-line:nth-child(5) { animation-delay: 9.6s; }
 
+/* Each line is visible for 2.4s with a 0.8s gap before the next, so no two
+   lines ever share a frame (windows would otherwise touch at the boundary). */
 @keyframes status-cycle {
   0%, 19.9%   { opacity: 0; }
-  20%, 40%    { opacity: 1; }
-  40.1%, 100% { opacity: 0; }
+  20%, 34.9%  { opacity: 1; }
+  35%, 100%   { opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1438,6 +1442,13 @@ h1, h2, h3, .eyebrow, .term-title {
   transition: color var(--t-fast);
 }
 .project-link:hover { color: var(--accent); }
+/* Stretched link: the whole card is one click target (title link covers it). */
+.project h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.project-link { position: relative; z-index: 1; }
 
 @media (max-width: 760px) {
   .project-detail { grid-template-columns: 1fr; }
