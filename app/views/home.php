@@ -9,7 +9,7 @@ $tickerItems = array_merge($c['ticker'], $c['languages'], $c['frameworks']);
             <div class="hero-copy" data-reveal>
                 <p class="eyebrow"><?= e($c['commands']['hero']) ?></p>
 
-                <h1 data-type><?= e($c['name']) ?><span class="type-caret" aria-hidden="true"></span></h1>
+                <h1 class="type-name" data-type><?= e($c['name']) ?><span class="type-caret" aria-hidden="true"></span></h1>
 
                 <p class="hero-role"><?= e($c['role']) ?></p>
 
@@ -57,7 +57,13 @@ $tickerItems = array_merge($c['ticker'], $c['languages'], $c['frameworks']);
                             </div>
                             <div class="profile-row">
                                 <dt>Status</dt>
-                                <dd><span class="profile-status" data-cycle='<?= e(json_encode($c['term_cycle'])) ?>'>OPEN TO WORK</span></dd>
+                                <dd><span class="profile-status">
+                                    <span class="status-line">OPEN TO WORK</span>
+                                    <span class="status-line">BUILDING WITH FLUTTER · UNITY</span>
+                                    <span class="status-line">FOCUS: AI SYSTEMS</span>
+                                    <span class="status-line">LEARNING: ETERNAL STUDENT</span>
+                                    <span class="status-line">STATUS: CS, THIRD YEAR</span>
+                                </span></dd>
                             </div>
                         </dl>
                     </div>

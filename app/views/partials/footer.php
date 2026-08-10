@@ -10,7 +10,7 @@
         </div>
 
         <div class="footer-bottom">
-            <p class="mono">© <span data-year><?= date('Y') ?></span> <?= e($data['name']) ?> · <?= e($data['location']) ?></p>
+            <p class="mono">© <?= date('Y') ?> <?= e($data['name']) ?> · <?= e($data['location']) ?></p>
             <div class="socials">
                 <?php require __DIR__ . '/socials.php'; ?>
             </div>

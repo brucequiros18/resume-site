@@ -12,7 +12,8 @@
             <span class="chrome-title">nash@portfolio</span>
         </a>
 
-        <button class="nav-toggle" aria-expanded="false" aria-controls="site-links" aria-label="Open menu">☰</button>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+        <label for="nav-toggle" class="nav-toggle" aria-label="Open menu">☰</label>
 
         <ul class="nav-links" id="site-links">
             <li><a href="/work"<?= ($req->path === '/work' || str_starts_with($req->path, '/work/')) ? ' aria-current="page"' : '' ?>>Work</a></li>
@@ -21,9 +22,9 @@
             <li><a href="/contact"<?= active_path($req, '/contact') ?>>Contact</a></li>
         </ul>
 
-        <button class="theme-toggle" type="button" aria-pressed="false"
-                aria-label="Switch accent theme" title="Switch accent theme">
+        <input type="checkbox" id="theme-toggle" class="theme-toggle-input">
+        <label for="theme-toggle" class="theme-toggle" aria-label="Switch accent theme" title="Switch accent theme">
             <span class="theme-toggle-dot" aria-hidden="true"></span>
-        </button>
+        </label>
     </nav>
 </header>

@@ -9,3 +9,6 @@ storage/
 # IDE
 .vscode/
 .idea/
+
+.vercel
+dist/

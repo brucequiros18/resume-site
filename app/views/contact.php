@@ -58,7 +58,28 @@ $csrfError = field_error('_csrf');
                     </div>
                 <?php endif; ?>
 
-                <form class="form-card" method="post" action="/contact" data-ajax-lock novalidate>
+                <?php if (defined('STATIC_BUILD')): ?>
+                    <form class="form-card" method="get" action="mailto:<?= e($c['email']) ?>" enctype="text/plain">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input id="name" name="Name" type="text" maxlength="70" autocomplete="name"
+                                   placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" name="Email" type="email" maxlength="190" autocomplete="email"
+                                   placeholder="you@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="Message" maxlength="4000"
+                                      placeholder="Tell me about your project idea, mobile app, website, game, or AI solution." required></textarea>
+                            <p class="form-note">Opens your email client — 12–4000 characters</p>
+                        </div>
+                        <button class="btn btn--primary" type="submit">Send message</button>
+                    </form>
+                <?php else: ?>
+                <form class="form-card" method="post" action="/contact" novalidate>
                     <?= csrf_field() ?>
 
                     <div class="visually-hidden" aria-hidden="true">
@@ -96,6 +117,7 @@ $csrfError = field_error('_csrf');
 
                     <button class="btn btn--primary" type="submit">Send message</button>
                 </form>
+                <?php endif; ?>
             </div>
         </div>
     </div>
