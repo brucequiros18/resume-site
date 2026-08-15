@@ -6,9 +6,9 @@
 
 return [
     'name'     => 'Nash Bruce Quiros',
-    'role'     => 'Computer Science Student · AI Innovator · Software & Game Developer',
-    'title'    => 'Nash Bruce Quiros — AI Innovator, Software Engineer & Game Developer',
-    'tagline'  => 'The future, built one project at a time.',
+    'role'     => '3rd Year Computer Science Student · Software & Game Developer',
+    'title'    => 'Nash Bruce Quiros — AI Innovator, Software Developer & Game Developer',
+    'tagline'  => 'Still exploring, still building — one project at a time.',
     'location' => 'Tangub City, Misamis Occidental, Philippines',
 
     // Section labels — plain, friendly words (readability over terminal-speak).
@@ -43,7 +43,7 @@ return [
 
     // Marquee ticker strip on the home page.
     'ticker' => [
-        'AI & Innovation', 'Game Development', 'Cross-Platform', 'Software Engineering',
+        'AI & Innovation', 'Game Development', 'Cross-Platform', 'Software Development',
         'Clean Code', 'Mobile Apps', 'Backend Systems', 'Problem Solving',
     ],
 
@@ -66,14 +66,14 @@ return [
 
     // Home — the two About paragraphs.
     'home_intro' => [
-        'I am Nash Bruce Quiros, a third-year Computer Science student passionate about artificial intelligence, software engineering, game development, and modern technologies. I specialize in C# and Dart, with experience in web development, mobile application development, and game development.',
+        'I am Nash Bruce Quiros, a third-year Computer Science student still exploring new fields and technologies — passionate about artificial intelligence, software development, game development, and building real things. I specialize in C# and Dart, with experience in web development, mobile application development, and game development.',
         'My interests include AI innovation, software architecture, backend systems, and creating digital experiences that solve real-world problems. I continuously explore new technologies and improve my skills in programming, problem-solving, and system design.',
     ],
 
     // About — story paragraphs.
     'about_story' => [
         'I discovered technology before I knew exactly where it would take me. From my first lines of code to building mobile apps, websites, and games, I\'ve learned that great software isn\'t created overnight — it\'s built through curiosity, consistency, and continuous learning.',
-        'Today, I focus on artificial intelligence, software engineering, mobile development, and game development. As a third-year Computer Science student, I enjoy turning ideas into real, working applications — from cross-platform mobile apps to web systems and interactive game experiences.',
+        'Today, I focus on artificial intelligence, software development, mobile development, and game development — and I\'m still exploring what comes next. As a third-year Computer Science student, I enjoy turning ideas into real, working applications — from cross-platform mobile apps to web systems and interactive game experiences.',
         'I believe innovation happens where creativity meets logic. Every project is a chance to learn, improve, and build something meaningful.',
         'Working with me means collaborating with someone who values clean code, thoughtful problem-solving, and constant growth. I don\'t just build software — I build experiences that make an impact.',
     ],
@@ -156,7 +156,7 @@ return [
                 'Web development',
                 'Game development',
                 'Backend development',
-                'Software engineering',
+                'Software development',
                 'Database management',
                 'UI/UX design',
             ],
