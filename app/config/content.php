@@ -185,6 +185,10 @@ return [
             'summary' => 'A 2D top-down survival and adventure game developed using Unity and C#. The game features island exploration, resource collection, and an interactive environment designed to provide an immersive gameplay experience.',
             'tags'    => ['Game Development', 'Unity', 'C#'],
             'image'   => 'images/erika-island.jpg',
+            'images'  => [
+                'images/erika-island.jpg',
+                'images/erika-island-2.jpg',
+            ],
             'body'    => [
                 'Erika\'s Island Experience is a 2D top-down survival and adventure game built with Unity and C#. Players explore a hand-crafted island, gather resources, and survive against the environment in an open world rendered in a pixel-art style.',
                 'The project exercises core game-development loops: input handling, physics and collision, scene management, save systems, and an inventory-driven resource economy. Every system is data-driven so levels and item stats can be tuned without touching code.',

@@ -1353,6 +1353,27 @@ h1, h2, h3, .eyebrow, .term-title {
   border-color: var(--border-2);
 }
 
+.project-gallery {
+  max-width: 1060px;
+  margin: clamp(28px, 5vw, 56px) auto 0;
+  display: grid;
+  gap: 18px;
+}
+
+.project-gallery--single { max-width: 860px; }
+
+.project-gallery .img-slot--detail {
+  max-width: none;
+  margin: 0;
+  aspect-ratio: 16 / 10;
+}
+
+@media (min-width: 720px) {
+  .project-gallery:not(.project-gallery--single) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 .project-detail {
   display: grid;
   grid-template-columns: 1.6fr 1fr;

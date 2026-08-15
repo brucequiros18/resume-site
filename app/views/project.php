@@ -47,13 +47,19 @@ else:
 <section class="section--tight" data-reveal>
     <div class="container">
         <?php
-        $slot = $project['image'] ?? '';
-        if ($slot !== ''):
-            $slotAlt = $project['name'] . ' — preview';
-            $slotClass = 'img-slot img-slot--detail';
-            require __DIR__ . '/partials/image-slot.php';
-            unset($slot, $slotAlt, $slotClass);
-        endif;
+        $slots = $project['images'] ?? (($project['image'] ?? '') !== '' ? [$project['image']] : []);
+        if (!empty($slots)):
+            $single = count($slots) === 1; ?>
+            <div class="project-gallery<?= $single ? ' project-gallery--single' : '' ?>">
+                <?php foreach ($slots as $slotIndex => $slot):
+                    $slotAlt = $project['name'] . ' — screenshot ' . ($slotIndex + 1);
+                    $slotClass = 'img-slot img-slot--detail';
+                    require __DIR__ . '/partials/image-slot.php';
+                endforeach;
+                unset($slot, $slotAlt, $slotClass, $slotIndex); ?>
+            </div>
+        <?php endif;
+        unset($slots, $single);
         ?>
     </div>
 </section>
