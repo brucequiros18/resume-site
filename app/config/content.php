@@ -30,10 +30,8 @@ return [
     'availability' => 'Open to internships, collaborations, and freelance projects',
     // Social links — swap URLs here, logos render automatically.
     'socials' => [
-        'github'    => 'https://github.com/nashquiros',
-        'linkedin'  => 'https://www.linkedin.com/in/nashquiros',
-        'facebook'  => 'https://www.facebook.com/nashbrucequiros',
-        'instagram' => 'https://www.instagram.com/ban.zhaoyu',
+        'github'    => 'https://github.com/brucequiros18',
+        'facebook'  => 'https://www.facebook.com/reignsempire08812x',
     ],
 
     // Image slots (optional). Drop the image file into public/<path> and it
