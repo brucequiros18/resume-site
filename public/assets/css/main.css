@@ -1486,7 +1486,7 @@ h1, h2, h3, .eyebrow, .term-title {
 }
 
 .uses-list li::before {
-  content: "â€º";
+  content: "\203A";
   position: absolute;
   left: 2px;
   top: 8px;
