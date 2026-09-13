@@ -47,5 +47,6 @@ $pageDesc = $data['tagline'];
     </main>
 
     <?php require __DIR__ . '/footer.php'; ?>
+    <script src="/assets/js/dropdown.js"></script>
 </body>
 </html>

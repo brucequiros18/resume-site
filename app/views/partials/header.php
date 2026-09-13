@@ -16,7 +16,16 @@
         <label for="nav-toggle" class="nav-toggle" aria-label="Open menu">☰</label>
 
         <ul class="nav-links" id="site-links">
-            <li><a href="/work"<?= ($req->path === '/work' || str_starts_with($req->path, '/work/')) ? ' aria-current="page"' : '' ?>>Work</a></li>
+            <li class="dropdown">
+                <button id="dropdownBtn" class="dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+                    Work <span class="dropdown-arrow" aria-hidden="true">▼</span>
+                </button>
+                <ul id="dropdownMenu" class="dropdown-menu">
+                    <?php foreach ($data['projects'] as $p): ?>
+                        <li><a href="/work/<?= e($p['slug']) ?>"><?= e($p['name']) ?></a></li>
+                    <?php endforeach; ?>
+                </ul>
+            </li>
             <li><a href="/uses"<?= active_path($req, '/uses') ?>>Uses</a></li>
             <li><a href="/about"<?= active_path($req, '/about') ?>>About</a></li>
             <li><a href="/contact"<?= active_path($req, '/contact') ?>>Contact</a></li>
